@@ -11,8 +11,8 @@ https://www.blackjackapprenticeship.com/blackjack-strategy-charts/
 We know it is complicated to learn all the basic strategy, so we divided it into three parts/modes: <br />
 1.- The first mode in which you only practice hard totals, so there is no aces involved <br />
 2.- The second mode you practice soft totals, in consequence there is no figure cards or 10's in the sabot <br />
-3.- For the third mode is a normal basic strategy practice, basically you practice both hard and soft totals in the same mode <br />
-We suggest you to first practice the hard and soft totals to then hop onto our third mode :^) (COMING SOON)
+3.- For the third mode is a normal basic strategy practice, basically you practice both hard and soft totals in the same mode (COMING SOON) <br />
+We suggest you to first practice the hard and soft totals to then hop onto our third mode :^) 
 
 ## How to play 
 
