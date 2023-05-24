@@ -2,8 +2,8 @@
 
 ## Context
 
-This code if for the people that love to play BlackJack and want to get better at BlackJack so they win more money
-or if you want to learn to count cards first you have to learn the basic strategy, so you can theoretically have perfect bets and after that you can learn the hi-low method for counting cards.
+This code if for the people that love to play BlackJack and want to get better at BlackJack so you can win more money
+or if you want to learn to count cards it is a great help because first you have to learn the basic strategy first before learning how to count cards, so you can theoretically have perfect bets and after that you can learn the hi-low method for counting cards.
 
 And it is based on the Basic Strategy table by the BlackJack Apprenticeship at: <br />
 https://www.blackjackapprenticeship.com/blackjack-strategy-charts/
