@@ -98,14 +98,14 @@ def PracticeHardTotals(sabot):
                 playerhand[index] = 10
 
 
-            if dealerupcard == "J":
-                dealerupcard = 10
+        if dealerupcard == "J":
+            dealerupcard = 10
 
-            if dealerupcard == "Q":
-                dealerupcard = 10
+        if dealerupcard == "Q":
+            dealerupcard = 10
 
-            if dealerupcard == "K":
-                dealerupcard = 10
+        if dealerupcard == "K":
+            dealerupcard = 10
 
 
 
