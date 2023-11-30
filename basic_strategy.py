@@ -17,58 +17,525 @@ deck = [
     "Q","Q","Q","Q",
     "K","K","K","K"
 ]
+#poner las lists comprehensions aqui
 
-sabot = []
+sabotoriginal = []
 
 for i in range(0,3):
-    sabot.extend(deck)
-
-random.shuffle(sabot)
+    sabotoriginal.extend(deck)
 
 
 
-def PracticeHardTotals(sabot):
+random.shuffle(sabotoriginal)
+
+def ShuffleSabot(sabotshu):
+    random.shuffle(sabotshu)
+    return sabotshu
+
+def GetCards(sabotgc):
+
+    lengthsabot = len(sabotgc)
+
+    index_dupcard = random.randint(0,lengthsabot)
+    dealerupcardfunc = sabotgc.pop(index_dupcard)
+    
+    index_pcard1 = random.randint(0,lengthsabot-1)
+    pcard1 = sabotgc.pop(index_pcard1)
+    
+    index_pcard2 = random.randint(0,lengthsabot-2)
+    pcard2 = sabotgc.pop(index_pcard2)
+
+    return dealerupcardfunc, pcard1, pcard2
+
+def ReturnCards(sabotrc,dealercard,pcard1r,pcard2r):
+
+    sabotrc.append(dealercard)
+    sabotrc.append(pcard1r)
+    sabotrc.append(pcard2r)
+    
+    return "The cards are back in the sabot"
+
+
+#The next two functions made the decisions based on the BlackJack Apprenticeship: basic strategy table,
+#link to the charts: https://www.blackjackapprenticeship.com/blackjack-strategy-charts/
+
+
+def checkhardtotalwin(playerhandtotalch, dealerupcardch, choicech):
+
+    match playerhandtotalch:
+        
+        case 1|2|3|4|5|6|7|8:
+
+            match choicech:
+
+                case 1:
+                    print("Correct")
+                    return True
+
+
+                case _:
+                    print("Correct play was hit")
+                    return False
+
+        case 9:
+
+            match choicech:
+
+                case 1:
+
+                    match dealerupcardch:
+
+                        case 2|7|8|9|10:
+
+                            print("correct")
+                            return True
+
+                        case _:
+
+                            print("Correct play was double")
+                            return False
+
+                case 2:
+
+                    match dealerupcardch:
+
+                        case 3|4|5|6:
+
+                            print("correct")
+                            return True
+
+                        case _:
+
+                            print("Correct play was hit")
+                            return False
+
+                case _:
+
+                    match dealerupcardch:
+
+                        case 2|7|8|9|10:
+                            print("The correct play was hit")
+                            return False
+
+                        case 3|4|5|6:
+                            print("The correct play was double")
+                            return False
+
+        case 10:
+
+            match choicech:
+
+                case 1:
+
+                    match dealerupcardch:
+
+                        case 10:
+
+                            print("correct")
+                            return True
+
+                        case _:
+
+                            print("The correct play was double")
+                            return False
+
+                case 2:
+
+                    match dealerupcardch:
+
+                        case 2|3|4|5|6|7|8|9:
+
+                            print("correct")
+                            return True
+
+                        case _:
+
+                            print("The correct play was hit")
+                            return False
+
+                case _:
+
+                    match dealerupcardch:
+
+                        case 10:
+
+                            print("The correct play was hit")
+                            return False
+
+                        
+                        case 2|3|4|5|6|7|8|9:
+                            
+                            print("The correct play was double")
+                            return False
+
+        case 11:
+
+            match choicech:
+
+                case 2:
+
+                    print("Correct")
+                    return True
+
+                case _:
+
+                    print("The correct play was double ")
+                    return False
+
+        case 12:
+
+            match choicech:
+
+                case 1:
+
+                    match dealerupcardch:
+
+                        case 2|3|7|8|9|10:
+
+                            print("correct")
+                            return True
+
+                        case _:
+                            
+                            print("The correct play was stand")
+                            return False
+                    
+                case 3:
+
+                    match dealerupcardch:
+
+                        case 4|5|6:
+
+                            print("correct")
+                            return True
+
+                        case _:
+
+                            print("The correct play was hit")
+
+                case _:
+
+                    match dealerupcardch:
+
+                        case 2|3|7|8|9|10:
+
+                            print("The correct play was hit")
+                            return False
+
+                        
+                        case 4|5|6:
+                            
+                            print("The correct play was stand")
+                            return False
+
+        case 13|14|15|16:
+
+            match choicech:
+
+                case 1:
+
+                    match dealerupcardch:
+
+                        case 7|8|9|10:
+
+                            print("correct")
+                            return True
+
+                        case _:
+
+                            print("The correct play was stand")
+                            return False
+
+
+                case 3:
+
+                    match dealerupcardch:
+
+                        case 2|3|4|5|6:
+
+                            print("correct")
+                            return True
+
+                        case _:
+
+                            print("The correct play was hit")
+                            return False
+                    
+
+                case _:
+
+                    match dealerupcardch:
+
+                        case 7|8|9|10:
+
+                            print("The correct play was hit")
+                            return False
+
+                        
+                        case 2|3|4|5|6:
+                            
+                            print("The correct play was stand")
+                            return False
+
+        case 17|18|19|20:
+
+            match choicech:
+
+                case 3:
+
+                    print("correct")
+                    return True
+
+                case _:
+
+                    print("The correct play was stand")
+                    return False
+
+        case 21:
+
+            print("BlackJack!")
+            return True
+
+
+#this is the other function based in the basic strategy chart
+
+def checksofttotalwin(playercardst, dealerupcardst, choicest):
+
+    match playercardst:
+
+            case 2|3:
+
+                match choicest:
+
+                    case 1:
+
+                        match dealerupcardst:
+
+                            case 2|3|4|7|8|9|10|11:
+
+                                print("correct")
+                                return True
+
+                            case _:
+
+                                print("The correct play was hit")
+                                return False
+
+                    case 2:
+
+                        match dealerupcardst:
+
+                            case 5|6:
+
+                                print("correct")
+                                return True
+
+                            case _:
+
+                                print("The correct play was double")
+
+                    case _:
+
+                        match dealerupcardst:
+                            
+                            case 2|3|4|7|8|9|10|11:
+
+                                print("The correct play was hit")
+                                return False
+
+                            case 5|6:
+
+                                print("The correct play was double")
+                                return False
+
+            case 4|5:
+
+                match choicest:
+
+                    case 1:
+
+                        match dealerupcardst:
+
+                            case 2|3|7|8|9|10|11:
+
+                                print("correct")
+                                return True
+
+                            case _:
+
+                                print("The correct play was hit")
+                                return False
+
+                    case 2:
+
+                        match dealerupcardst:
+
+                            case 4|5|6:
+
+                                print("correct")
+                                return True
+
+                            case _:
+
+                                print("The correct play was double")
+                                return False
+
+                    case _:
+
+                        match dealerupcardst:
+
+                            case 2|3|7|8|9|10|11:
+
+                                print("The correct play was hit")
+                                return False
+
+                            case 4|5|6:
+
+                                print("The correct play was double")
+                                return False
+
+            case 6:
+
+                match choicest:
+
+                    case 1:
+
+                        match dealerupcardst:
+
+                            case 2|7|8|9|10|11:
+
+                                print("correct")
+                                return True
+
+                            case _:
+
+                                print("The correct play was hit")
+                                return False
+
+                    case 2:
+
+                        match dealerupcardst:
+
+                            case 3|4|5|6:
+
+                                print("correct")
+                                return True
+
+                            case _:
+
+                                print("The correct play was double")
+                                return False
+
+                    case _:
+
+                        match dealerupcardst:
+
+                            case 2|7|8|9|10|11:
+
+                                print("The correct play was hit")
+                                return False
+
+                            case 3|4|5|6:
+
+                                print("The correct play was double")
+                                return False
+
+            case 7:
+
+                match choicest:
+
+                    case 1:
+
+                        match dealerupcardst:
+
+                            case 9|10|11:
+
+                                print("correct")
+                                return True
+
+                            case _:
+
+                                print("The correct play was hit")
+                                return False
+
+                    case 3:
+
+                        match dealerupcardst:
+
+                            case 2|3|4|5|6|7|8:
+
+                                print("correct")
+                                return True
+
+                            case _:
+
+                                print("The correct play was stand")
+                                return False
+
+                    case _:
+
+                        match dealerupcardst:
+
+                            case 2|3|4|5|6|7|8:
+
+                                print("The correct play was stand")
+                                return False
+                            
+                            case 9|10|11:
+
+                                print("The correct play was hit")
+                                return False
+
+            case 8|9:
+
+                match choicest:
+
+                    case 3:
+
+                        print("correct")
+                        return True
+
+                    case _:
+
+                        print("The correct play was stand")
+                        return False
+            
+
+
+
+
+def PracticeHardTotals(sabotht):
     #to practice hard hands we have to erase from the list all the aces from the sabot
     handsplayed = 0
     correcthands = 0
 
     
-    for i in sabot:  #Here we remove the aces with a for
+    for i in sabotht:  #Here we remove the aces with a for
         if i == "A":
-            sabot.remove(i)
-    for i in sabot:  #the process its done 2 times because in the first 'for cycle' for a unknown reason  
+            sabotht.remove(i)
+    for i in sabotht:  #the process its done 2 times because in the first 'for cycle' for a unknown reason  
                      #there were still aces left in the sabot
         if i == "A":
-            sabot.remove(i)
+            sabotht.remove(i)
         #Here we get the length of the sabot to use it later to pick a random card from the sabot
     
     while True:
 
-        print(correcthands,"/",handsplayed, 'Hands')
-        lengthsabot = len(sabot)
+        ShuffleSabot(sabotht)
 
+        print(correcthands,"/",handsplayed, 'Hands')
+        
         # In blackjack the dealer has 2 cards, a card facing upwards and a card facing down, for basic strategy
         # the only thing we need to know is the dealer card thats facing upwards and it is called the dealer upcard
+        
+        dealerupcard1, playercard1, playercard2 = GetCards(sabotht)
 
-        index_dupcard = random.randint(0,lengthsabot)
-        dealerupcard = sabot.pop(index_dupcard)
-    
-        index_pcard1 = random.randint(0,lengthsabot-1)
-        pcard1 = sabot.pop(index_pcard1)
-    
+        dealerupcardht =  dealerupcard1
+        playerhandht = [playercard1, playercard2]
 
-        index_pcard2 = random.randint(0,lengthsabot-2)
-        pcard2 = sabot.pop(index_pcard2)
-
-
-
-        dealerupcard1 = [dealerupcard]
-        playerhand = [pcard1,pcard2]
-
-
-        #hee we display in the terminal the dealerupcard and the 2 cards the player has
-        print("Dealer upcard: ", dealerupcard)
-        print("Your Hand:",', '.join(map(str, playerhand)))
+        #here we display in the terminal the dealerupcard and the 2 cards the player has
+        print("Dealer upcard: ", dealerupcardht)
+        print("Your Hand:",', '.join(map(str, playerhandht)))
 
         # In blackjack you can do several things like hitting(ask for another card), double(its like a hit but you can only
         # hit once), stand, you can also split the cards when both of them are the same number and finally you can surrender
@@ -85,33 +552,32 @@ def PracticeHardTotals(sabot):
         #so we can start making decisions based on the basic strategy chart
 
 
-        for index in range(len(playerhand)):
+        for index in range(len(playerhandht)):
 
-            if playerhand[index] == "J":
-                playerhand[index] = 10
+            if playerhandht[index] == "J":
+                playerhandht[index] = 10
             
         
-            elif playerhand[index] == "Q":
-                playerhand[index] = 10 
+            elif playerhandht[index] == "Q":
+                playerhandht[index] = 10 
         
-            elif playerhand[index] == "K":
-                playerhand[index] = 10
+            elif playerhandht[index] == "K":
+                playerhandht[index] = 10
 
 
-        if dealerupcard == "J":
-            dealerupcard = 10
+        if dealerupcardht == "J":
+            dealerupcardht = 10
 
-        if dealerupcard == "Q":
-            dealerupcard = 10
+        elif dealerupcardht == "Q":
+            dealerupcardht = 10
 
-        if dealerupcard == "K":
-            dealerupcard = 10
+        elif dealerupcardht == "K":
+            dealerupcardht = 10
 
 
-
-        playerhandTotal = playerhand[0] + playerhand[1]
+        playerhandTotal = playerhandht[0] + playerhandht[1]
         print(playerhandTotal)
-        print(len(sabot))
+        print(len(sabotht))
 
         match playerhandTotal:
 
@@ -131,236 +597,33 @@ def PracticeHardTotals(sabot):
                 continue
 
 
-# After this to make all the decisions it is based on the blackjack basic strategy chart
-# made y BlackJack Apprenticeship, link to the charts: https://www.blackjackapprenticeship.com/blackjack-strategy-charts/
-
         if choice == 6:
             print("Have a nice day, come back later")
             break
-
+    
 
         #if the player has a correct answer, the correct hand variable is added a 1
         #and also the hands played will be added 1, so if the player loses only the 
         # hands played will be added 1 
 
 
-        match playerhandTotal:
+        checkhtwin = checkhardtotalwin(playerhandTotal, dealerupcard, choice)
 
-            case 1|2|3|4|5|6|7|8:
+        if checkhtwin:
 
-                match choice:
+            correcthands = correcthands + 1
+            handsplayed = handsplayed + 1
 
-                    case 1:
+        else:
 
-                        correcthands = correcthands + 1
-                        handsplayed = handsplayed + 1
-                        print("correct")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 9:
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 2|7|8|9|10:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case 2:
-
-                        match dealerupcard:
-
-                            case 3|4|5|6:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-            
-            case 10:
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 10:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case 2:
-
-                        match dealerupcard:
-
-                            case 2|3|4|5|6|7|8|9:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-                        
-            case 11:
-
-                match choice:
-
-                    case 2:
-
-                        correcthands = correcthands + 1
-                        handsplayed = handsplayed + 1
-                        print("correct")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 12:
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 2|3|7|8|9|10:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-                    
-                    case 3:
-
-                        match dealerupcard:
-
-                            case 4|5|6:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 13|14|15|16:
-
-                print()
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 7|8|9|10:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case 3:
-
-                        match dealerupcard:
-
-                            case 2|3|4|5|6:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-                    
-                    case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-            case 17|18|19|20:
-
-                match choice:
-
-                    case 3:
-
-                        correcthands = correcthands + 1
-                        handsplayed = handsplayed + 1
-                        print("correct")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 21:
-
-                correcthands = correcthands + 1
-                handsplayed = handsplayed + 1
-                print("You win")
-
+            handsplayed = handsplayed + 1
         
-        sabot.append(dealerupcard)
-        sabot.append(pcard1)
-        sabot.append(pcard2)
+        #at the end of the hand, the card that were used back in the sabot
+        ReturnCards(sabotht, dealerupcard1, playercard1, playercard2)
 
 
-def PracticeSoftTotals(sabot):
+
+def PracticeSoftTotals(sabotst):
 
     #Practicing soft hands requires the player has to have an Ace in his hand 
 
@@ -370,37 +633,27 @@ def PracticeSoftTotals(sabot):
     #so as we are practicing soft hands we can have all the cards in the 
     while True:
 
+        ShuffleSabot(sabotst)
+
         print(correcthands,"/",handsplayed, 'Hands')
-        lengthsabot = len(sabot)
+        lengthsabot = len(sabotst)
 
         # In blackjack the dealer has 2 cards, a card facing upwards and a card facing down, for basic strategy
         # the only thing we need to know is the dealer card thats facing upwards and it is called the dealer up card
 
-        index_dupcard = random.randint(0,lengthsabot-3)
-        dealerupcard = sabot.pop(index_dupcard)
+        dealerupcardstf, playercardst1f, playercardst2f = GetCards(sabotst)
+
+        playercardst1 = playercardst1f
+
+        playercardst1 = 'A'
+
+        dealerupcardst =  dealerupcardstf
+        playerhandst = [playercardst1, playercardst2f]
     
-        index_pcard1 = random.randint(0,lengthsabot-3)
-        pcard1 = sabot.pop(index_pcard1)
-    
-        pcard2 = 'A'
-
-
-        dealerhand = [dealerupcard]
-        playerhand = [pcard1, pcard2]
-
-
-        if "A" in playerhand:
-
-            indexA = playerhand.index('A')
-
-            if indexA == 1:
-                playerhandA = playerhand[::-1]
-                pcard1 = playerhandA[0]
-                pcard2 = playerhandA[1]
 
         #here we display in the terminal the dealerupcard and the 2 cards the player has
-        print("Dealer upcard: ", dealerupcard)
-        print("Your Hand:",', '.join(map(str, playerhand)))
+        print("Dealer upcard: ", dealerupcardst)
+        print("Your Hand:",', '.join(map(str, playerhandst)))
 
         # I blackjack you can do several things like hitting(ask for another card), double(its like a hit but you can only
         # hit once), stand, you can also split the cards when both of them are the same number and finally you can surrender
@@ -413,30 +666,32 @@ def PracticeSoftTotals(sabot):
         print("6.- leave")
     
         #here to change the values of the figure cards, we dont need the for cycle
-        # because we know that the first index is the ace card and we only need to chang    e the second index
+        # because we know that the first index is the ace card and we only need to change the second index
         # 
-        if pcard2 == "J":
-            pcard2 = 10
+        if playerhandst[1] == "J":
+            playerhandst[1] = 10
 
-        if pcard2 == "Q":
-         pcard2 = 10
+        elif playerhandst[1] == "Q":
+            playerhandst[1] = 10
 
-        if pcard2 == "K":
-            pcard2 = 10
+        elif playerhandst[1] == "K":
+            playerhandst[1] = 10
 
-        if dealerupcard == "J":
-            dealerupcard = 10
 
-        if dealerupcard == "Q":
-            dealerupcard = 10
+        if dealerupcardst == "J":
+            dealerupcardst = 10
 
-        if dealerupcard == "K":
-            dealerupcard = 10
+        elif dealerupcardst == "Q":
+            dealerupcardst = 10
 
-        if dealerupcard == "A":
-            dealerupcard = 11
+        elif dealerupcardst == "K":
+            dealerupcardst = 10
 
-        if pcard2 == 10:
+        elif dealerupcardst == "A":
+            dealerupcardst = 11
+
+
+        if playerhandst[1] == 10:
             correcthands = correcthands + 1
             handsplayed = handsplayed + 1
             print("You win")
@@ -444,283 +699,173 @@ def PracticeSoftTotals(sabot):
 
         while True:
             try:
-                choice = int(input("Select an option --> "))
+                choicestotal = int(input("Select an option --> "))
                 break  # Break out of the loop if the input is a valid integer
             except ValueError:
                 print("Invalid input. You have to pick a number from 1 to 6.")
                 continue
         #after doing all of this all that is left to do, is to make all the decisions
 
-        if choice == 6:
+        if choicestotal == 6:
 
             print("Have a nice day, come back later")
             break
         
-        if playerhand[0] == 'A' and playerhand[0] == 'A':
+        checkstwin = checksofttotalwin(playerhandst[1], dealerupcardst, choicestotal)
 
-            if choice == 1:
+        if checkstwin:
+
+            correcthands = correcthands + 1
+            handsplayed = handsplayed + 1
+
+        else:
+
+            handsplayed = handsplayed + 1 
+
+
+        ReturnCards(sabotst, dealerupcardstf, playercardst1f, playercardst2f)
+
+
+def PracticeBasicStrategy(sabotbs):
+
+    handsplayed = 0
+    correcthands = 0
+    
+
+    while True:
+
+        ShuffleSabot(sabotbs)
+
+        print(correcthands,"/",handsplayed, 'Hands')
+
+        dealerupcardbs1f, playercardbs1f, playercardbs2f = GetCards(sabotbs)
+
+        dealerupcardbs =  dealerupcardbs1f
+        playerhandbs = [playercardbs1f, playercardbs2f]
+
+        #here we display in the terminal the dealerupcard and the 2 cards the player has
+        print("Dealer upcard: ", dealerupcardbs)
+        print("Your Hand:",', '.join(map(str, playerhandbs)))
+
+
+        for index in range(len(playerhandbs)):
+
+            if playerhandbs[index] == "J":
+                playerhandbs[index] = 10
+            
+            elif playerhandbs[index] == "Q":
+                playerhandbs[index] = 10 
+        
+            elif playerhandbs[index] == "K":
+                playerhandbs[index] = 10
+
+            elif playerhandbs[index] == "A":
+                playerhandbs[index] = 11
+        
+
+        if dealerupcardbs == "J":
+            dealerupcardbs = 10
+
+        elif dealerupcardbs == "Q":
+            dealerupcardbs = 10
+
+        elif dealerupcardbs == "K":
+            dealerupcardbs = 10
+
+        elif dealerupcardbs == "A":
+            dealerupcardbs = 11
+
+        print("What are you going to do?")
+        print("2.- Double")
+        print("3.- Stand")
+        print("4.- Split")
+        print("5.- Surrender")
+        print("6.- leave")
+        print("1.- Hit")
+    
+        if 11 in playerhandbs:
+
+            aceindex = playerhandbs.index(11)
+
+            if aceindex == 1:
+
+                playerhandbs = [playercardbs2f, playercardbs1f]
+
+            if playerhandbs[1] == 10:
+                correcthands = correcthands + 1
+                handsplayed = handsplayed + 1
+                print("You win")
+                continue
+
+            while True:
+                try:
+                    choicebstotal = int(input("Select an option --> "))
+                    break  # Break out of the loop if the input is a valid integer
+                except ValueError:
+                    print("Invalid input. You have to pick a number from 1 to 6.")
+                    continue
+            #after doing all of this all that is left to do, is to make all the decisions
+
+            if choicebstotal == 6:
+
+                print("Have a nice day, come back later")
+                break
+            
+            checkstwin = checksofttotalwin(playerhandbs[1], dealerupcardbs, choicebstotal)
+
+            if checkstwin:
 
                 correcthands = correcthands + 1
                 handsplayed = handsplayed + 1
-                print("correct")
-                sabot.append(dealerupcard)
-                sabot.append(pcard1)
-                sabot.append(pcard2)
-                continue
-                
+
+            else:
+
+                handsplayed = handsplayed + 1 
+
+
+            ReturnCards(sabotbs, dealerupcardbs1f, playercardbs1f, playercardbs2f)
+
+
+        else:
+
+            playerhandTotalbs = playerhandbs[0] + playerhandbs[1]
+            print(playerhandTotalbs)
+            print(len(sabotbs))
+
+            match playerhandTotalbs:
+
+                case 21:
+
+                    correcthands = correcthands + 1
+                    handsplayed = handsplayed + 1
+                    print("You win")
+                    continue
+
+            while True:
+                try:
+                    choicebs = int(input("Select an option --> "))
+                    break  # Break out of the loop if the input is a valid integer
+                except ValueError:
+                    print("Invalid input. You have to pick a number from 1 to 6.")
+                    continue
+
+
+            if choicebs == 6:
+                print("Have a nice day, come back later")
+                break
+
+            checkhtwin = checkhardtotalwin(playerhandTotalbs, dealerupcardbs, choicebs)
+
+            if checkhtwin:
+
+                correcthands = correcthands + 1
+                handsplayed = handsplayed + 1
 
             else:
 
                 handsplayed = handsplayed + 1
-                print("wrong")
-                sabot.append(dealerupcard)
-                sabot.append(pcard1)
-                sabot.append(pcard2)
-                continue
-                
-        match pcard2:
 
-            case 2|3:
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 2|3|4|7|8|9|10|11:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case 2:
-
-                        match dealerupcard:
-
-                            case 5|6:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 4:
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 2|3|7|8|9|10|11:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case 2:
-
-                        match dealerupcard:
-
-                            case 4|5|6:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case _:
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 5:
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 2|3|7|8|9|10|11:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case 2:
-
-                        match dealerupcard:
-
-                            case 4|5|6:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 6:
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 2|7|8|9|10|11:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case 2:
-
-                        match dealerupcard:
-
-                            case 3|4|5|6:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 7:
-
-                match choice:
-
-                    case 1:
-
-                        match dealerupcard:
-
-                            case 9|10|11:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case 3:
-
-                        match dealerupcard:
-
-                            case 2|3|4|5|6|7|8:
-
-                                correcthands = correcthands + 1
-                                handsplayed = handsplayed + 1
-                                print("correct")
-
-                            case _:
-
-                                handsplayed = handsplayed + 1
-                                print("wrong")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 8:
-
-                match choice:
-
-                    case 3:
-
-                        correcthands = correcthands + 1
-                        handsplayed = handsplayed + 1
-                        print("correct")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-
-            case 9:
-
-                match choice:
-
-                    case 3:
-
-                        correcthands = correcthands + 1
-                        handsplayed = handsplayed + 1
-                        print("correct")
-
-                    case _:
-
-                        handsplayed = handsplayed + 1
-                        print("wrong")
-            
-            case _:
-
-                handsplayed = handsplayed + 1
-                print("wrong")
-
-            
-        sabot.append(dealerupcard)
-        sabot.append(pcard1)
-        sabot.append(pcard2)
-
-
-def BasicStrategy(sabot):
-
-    handsplayed = 0
-    correcthands = 0
-    print()
-
+            ReturnCards(sabotbs, dealerupcardbs1f, playercardbs1f, playercardbs2f)
 
 
 def printMenu():
@@ -740,42 +885,28 @@ def printMenu():
 
     while True:
         try:
-            option = int(input("Your choice --> "))
+            optionmenu = int(input("Your choice --> "))
             break  # Break out of the loop if the input is a valid integer
         except ValueError:
             print("Invalid input. Please enter an integer.")
             continue
-    
 
-option = printMenu()
+    return optionmenu
 
+optionmenu = printMenu()
 
-while option != 4 :
+while optionmenu != 4 :
 
-    if option == 1 :
-        PracticeHardTotals(sabot)
+    if optionmenu == 1 :
+        PracticeHardTotals(sabotoriginal)
         
-    elif option == 2 :
-        PracticeSoftTotals(sabot)
+    elif optionmenu == 2 :
+        PracticeSoftTotals(sabotoriginal)
 
-    elif option == 3 :
-        PracticeBasicStrategy(sabot)
-
-    else :
-        print("Invalid input")
+    elif optionmenu == 3 :
+        PracticeBasicStrategy(sabotoriginal)
     
-    opcion = printMenu()
-
-
-
-
-#ayu dark bordered
-#electron highlighter
+    optionmenu = printMenu()
 
 
     
-
-
-
-
-
